@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Make sure to comment the line 23: @Component if you're starting the application for the
- * second time while using PostgreSQL. This code id used only to initialize some values for testing...
- * */
+ * Make sure to comment the line 24: @Component if you're starting the application for the
+ * second time while using production profile with PostgreSQL. This code id used only to initialize some values for testing...
+ */
 @Component
 public class DataInitializer {
     private final CategoryService categoryService;
