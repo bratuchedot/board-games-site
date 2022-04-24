@@ -16,6 +16,8 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String photo;
+
     private String name;
 
     @Column(length = 1000)
@@ -51,5 +53,26 @@ public class Game {
         this.likes = 0;
         this.categories = categories;
         this.publisher = publisher;
+    }
+
+    public Game(String photo, String name, String shortDescription, String description, Integer numberOfPlayers, Integer playingTimeInMinutes, Integer ageRating, LocalDate releaseDate, List<Category> categories, Publisher publisher) {
+        this.photo = photo;
+        this.name = name;
+        this.shortDescription = shortDescription;
+        this.description = description;
+        this.numberOfPlayers = numberOfPlayers;
+        this.playingTimeInMinutes = playingTimeInMinutes;
+        this.ageRating = ageRating;
+        this.releaseDate = releaseDate;
+        this.likes = 0;
+        this.categories = categories;
+        this.publisher = publisher;
+    }
+
+    @Transient
+    public String getPhotoPath() {
+        if (photo == null)
+            return "/assets/images/400x400.png";
+        return "/game-photos/" + id + "/" + photo;
     }
 }

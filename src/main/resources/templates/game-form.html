@@ -121,12 +121,27 @@
 
 <!-- Main -->
 <div class="container my-4">
-    <form class="form" th:method="POST" th:action="@{'/games/{id}' (id=${game?.getId()})}">
+    <div class="row">
+        <!-- Error -->
+        <div th:if="${hasError}">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <h4 class="alert-heading">Error</h4>
+                <span th:text="${error}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        </div>
+    </div>
+    <form class="form" th:method="POST" th:action="@{'/games/{id}' (id=${game?.getId()})}"
+          enctype="multipart/form-data">
         <h2 class="h2">Fill the form bellow to add new or edit existing game</h2>
         <div class="my-2">
             <label for="name" class="form-label">Name</label>
             <input type="text" id="name" name="name" class="form-control" placeholder="Name"
                    th:value="${game?.getName()}" required="">
+        </div>
+        <div class="my-2">
+            <label class="form-label" for="photo">Photo</label>
+            <input type="file" class="form-control" id="photo" name="photo" accept="image/jpeg, image/png">
         </div>
         <div class="my-2">
             <label for="shortDescription" class="form-label">Short description</label>

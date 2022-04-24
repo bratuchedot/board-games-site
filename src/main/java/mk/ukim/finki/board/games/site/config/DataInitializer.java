@@ -185,6 +185,7 @@ public class DataInitializer {
         // TODO: Add Games
         // Gloomhaven
         this.gameService.addGame(new Game(
+                "gloomhaven.jpg",
                 "Gloomhaven",
                 "Gloomhaven is a game of Euro-inspired tactical combat in a persistent world of shifting motives. Players will take on the role of a wandering adventurer with their own special set of skills and their own reasons for traveling to this dark corner of the world. Players must work together out of necessity to clear out menacing dungeons and forgotten ruins. In the process, they will enhance their abilities with experience and loot, discover new locations to explore and plunder, and expand an ever-branching story fueled by the decisions they make.",
                 "Gloomhaven is a game of Euro-inspired tactical combat in a persistent world of shifting motives. Players will take on the role of a wandering adventurer with their own special set of skills and their own reasons for traveling to this dark corner of the world. Players must work together out of necessity to clear out menacing dungeons and forgotten ruins. In the process, they will enhance their abilities with experience and loot, discover new locations to explore and plunder, and expand an ever-branching story fueled by the decisions they make.\n" +
@@ -201,6 +202,7 @@ public class DataInitializer {
 
         // Pandemic Legacy: Season 1
         this.gameService.addGame(new Game(
+                "pandemic-legacy.jpg",
                 "Pandemic Legacy: Season 1",
                 "Pandemic Legacy is a co-operative campaign game, with an overarching story-arc played through 12-24 sessions, depending on how well your group does at the game. At the beginning, the game starts very similar to basic Pandemic, in which your team of disease-fighting specialists races against the clock to travel around the world, treating disease hotspots while researching cures for each of four plagues before they get out of hand.",
                 "Pandemic Legacy is a co-operative campaign game, with an overarching story-arc played through 12-24 sessions, depending on how well your group does at the game. At the beginning, the game starts very similar to basic Pandemic, in which your team of disease-fighting specialists races against the clock to travel around the world, treating disease hotspots while researching cures for each of four plagues before they get out of hand.\n" +
@@ -221,6 +223,7 @@ public class DataInitializer {
 
         // 7 Wonders Duel
         this.gameService.addGame(new Game(
+                "seven-wonders-duel.jpg",
                 "7 Wonders Duel",
                 "In many ways 7 Wonders Duel resembles its parent game 7 Wonders as over three ages players acquire cards that provide resources or advance their military or scientific development in order to develop a civilization and complete wonders.",
                 "In many ways 7 Wonders Duel resembles its parent game 7 Wonders as over three ages players acquire cards that provide resources or advance their military or scientific development in order to develop a civilization and complete wonders.\n" +
@@ -241,6 +244,7 @@ public class DataInitializer {
 
         // Orleans
         this.gameService.addGame(new Game(
+                "orleans.jpg",
                 "Orleans",
                 "During the medieval goings-on around Orléans, you must assemble a following of farmers, merchants, knights, monks, etc. to gain supremacy through trade, construction and science in medieval France.",
                 "During the medieval goings-on around Orléans, you must assemble a following of farmers, merchants, knights, monks, etc. to gain supremacy through trade, construction and science in medieval France.\n" +
@@ -257,6 +261,7 @@ public class DataInitializer {
 
         // Santorini
         this.gameService.addGame(new Game(
+                "santorini.jpg",
                 "Santorini",
                 "Santorini is a re-imagining of the purely abstract 2004 edition. Since its original inception over 30 years ago, Santorini has been continually developed, enhanced and refined by designer Gordon Hamilton.",
                 "Santorini is a re-imagining of the purely abstract 2004 edition. Since its original inception over 30 years ago, Santorini has been continually developed, enhanced and refined by designer Gordon Hamilton.\n" +
@@ -279,6 +284,7 @@ public class DataInitializer {
 
         // Manitoba
         this.gameService.addGame(new Game(
+                "manitoba.jpg",
                 "Manitoba",
                 "The Canadian province of Manitoba is wild, fascinating, and almost without any limits: countless lakes, majestic mountains, a vast tundra in the north and endless prairies in the south. Manitoba — a country whose name derives directly from Manitou, the big spirit of creation of the American natives.",
                 "The Canadian province of Manitoba is wild, fascinating, and almost without any limits: countless lakes, majestic mountains, a vast tundra in the north and endless prairies in the south. Manitoba — a country whose name derives directly from Manitou, the big spirit of creation of the American natives.\n" +
@@ -318,6 +324,4 @@ public class DataInitializer {
                 "https://www.bootdey.com/app/webroot/img/Content/avatar/avatar7.png",
                 Role.ROLE_USER));
     }
-
-
 }

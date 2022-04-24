@@ -15,10 +15,19 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -79,11 +88,41 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    public Game create(MultipartFile photo, String name, String shortDescription, String description, Integer numberOfPlayers, Integer playingTimeInMinutes, Integer ageRating, LocalDate releaseDate, List<Long> categoriesIds, Long publisherId) throws IOException {
+        List<Category> categories = this.categoryRepository.findAllById(categoriesIds);
+        Publisher publisher = this.publisherRepository.findById(publisherId)
+                .orElseThrow(() -> new PublisherNotFoundException(publisherId));
+
+        String photoName = StringUtils.cleanPath(Objects.requireNonNull(photo.getOriginalFilename()));
+        Game game = new Game(photoName, name, shortDescription, description, numberOfPlayers, playingTimeInMinutes, ageRating, releaseDate, categories, publisher);
+        this.gameRepository.save(game);
+
+        String uploadDir = "./game-photos/" + game.getId();
+        Path uploadPath = Paths.get(uploadDir);
+        if (!Files.exists(uploadPath))
+            Files.createDirectories(uploadPath);
+
+        try {
+            InputStream inputStream = photo.getInputStream();
+            Path photoPath = uploadPath.resolve(photoName);
+            Files.copy(inputStream, photoPath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException exception) {
+            throw new IOException("Could not save uploaded photo: " + photoName);
+        }
+        return game;
+    }
+
+    @Override
     public Game update(Long id, String name, String shortDescription, String description, Integer numberOfPlayers, Integer playingTimeInMinutes, Integer ageRating, LocalDate releaseDate, List<Long> categoriesIds, Long publisherId) {
         Game game = this.findById(id);
         List<Category> categories = this.categoryRepository.findAllById(categoriesIds);
         Publisher publisher = this.publisherRepository.findById(publisherId)
                 .orElseThrow(() -> new PublisherNotFoundException(publisherId));
+        updateInfo(game, name, shortDescription, description, numberOfPlayers, playingTimeInMinutes, ageRating, releaseDate, categories, publisher);
+        return this.gameRepository.save(game);
+    }
+
+    private void updateInfo(Game game, String name, String shortDescription, String description, Integer numberOfPlayers, Integer playingTimeInMinutes, Integer ageRating, LocalDate releaseDate, List<Category> categories, Publisher publisher) {
         game.setName(name);
         game.setShortDescription(shortDescription);
         game.setDescription(description);
@@ -93,7 +132,34 @@ public class GameServiceImpl implements GameService {
         game.setReleaseDate(releaseDate);
         game.setCategories(categories);
         game.setPublisher(publisher);
-        return this.gameRepository.save(game);
+    }
+
+    @Override
+    public Game update(Long id, MultipartFile photo, String name, String shortDescription, String description, Integer numberOfPlayers, Integer playingTimeInMinutes, Integer ageRating, LocalDate releaseDate, List<Long> categoriesIds, Long publisherId) throws IOException {
+        Game game = this.findById(id);
+        List<Category> categories = this.categoryRepository.findAllById(categoriesIds);
+        Publisher publisher = this.publisherRepository.findById(publisherId)
+                .orElseThrow(() -> new PublisherNotFoundException(publisherId));
+
+        String photoName = StringUtils.cleanPath(Objects.requireNonNull(photo.getOriginalFilename()));
+        game.setPhoto(photoName);
+
+        updateInfo(game, name, shortDescription, description, numberOfPlayers, playingTimeInMinutes, ageRating, releaseDate, categories, publisher);
+        this.gameRepository.save(game);
+
+        String uploadDir = "./game-photos/" + game.getId();
+        Path uploadPath = Paths.get(uploadDir);
+        if (!Files.exists(uploadPath))
+            Files.createDirectories(uploadPath);
+
+        try {
+            InputStream inputStream = photo.getInputStream();
+            Path photoPath = uploadPath.resolve(photoName);
+            Files.copy(inputStream, photoPath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException exception) {
+            throw new IOException("Could not save uploaded photo: " + photoName);
+        }
+        return game;
     }
 
     @Override

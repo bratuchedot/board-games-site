@@ -170,7 +170,7 @@
         <div class="col" th:each="game : ${games}" th:with="cardId=${#strings.randomAlphanumeric(10)}">
             <!-- Game card -->
             <div class="card">
-                <img src="/assets/images/400x400.png" class="card-img-top" alt="...">
+                <img th:src="${game.getPhotoPath()}" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${game.getName()}">[game.name]</h5>
                     <h6 class="card-subtitle mb-2 text-muted"
@@ -206,7 +206,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="w-50">
-                                    <img src="/assets/images/400x400.png" class="img-fluid" alt="...">
+                                    <img th:src="${game.getPhotoPath()}" class="img-fluid">
                                 </div>
                                 <hr>
                                 <h6>Publisher: <span class="mb-2 text-muted"

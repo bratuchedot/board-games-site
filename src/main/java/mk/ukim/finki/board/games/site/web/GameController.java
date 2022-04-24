@@ -9,7 +9,9 @@ import mk.ukim.finki.board.games.site.service.PublisherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -71,21 +73,7 @@ public class GameController {
     }
 
     @PostMapping
-    public String addGame(@RequestParam String name,
-                          @RequestParam String shortDescription,
-                          @RequestParam String description,
-                          @RequestParam Integer numberOfPlayers,
-                          @RequestParam Integer playingTimeInMinutes,
-                          @RequestParam Integer ageRating,
-                          @RequestParam String releaseDate,
-                          @RequestParam List<Long> categoriesIds,
-                          @RequestParam Long publisherId) {
-        this.gameService.create(name, shortDescription, description, numberOfPlayers, playingTimeInMinutes, ageRating, LocalDate.parse(releaseDate), categoriesIds, publisherId);
-        return "redirect:/games";
-    }
-
-    @PostMapping("/{id}")
-    public String editGame(@PathVariable Long id,
+    public String addGame(@RequestParam(required = false) MultipartFile photo,
                           @RequestParam String name,
                           @RequestParam String shortDescription,
                           @RequestParam String description,
@@ -94,8 +82,32 @@ public class GameController {
                           @RequestParam Integer ageRating,
                           @RequestParam String releaseDate,
                           @RequestParam List<Long> categoriesIds,
-                          @RequestParam Long publisherId) {
-        this.gameService.update(id, name, shortDescription, description, numberOfPlayers, playingTimeInMinutes, ageRating, LocalDate.parse(releaseDate), categoriesIds, publisherId);
+                          @RequestParam Long publisherId) throws IOException {
+        if (photo == null || photo.isEmpty()) {
+            this.gameService.create(name, shortDescription, description, numberOfPlayers, playingTimeInMinutes, ageRating, LocalDate.parse(releaseDate), categoriesIds, publisherId);
+        } else {
+            this.gameService.create(photo, name, shortDescription, description, numberOfPlayers, playingTimeInMinutes, ageRating, LocalDate.parse(releaseDate), categoriesIds, publisherId);
+        }
+        return "redirect:/games";
+    }
+
+    @PostMapping("/{id}")
+    public String editGame(@PathVariable Long id,
+                           @RequestParam(required = false) MultipartFile photo,
+                           @RequestParam String name,
+                           @RequestParam String shortDescription,
+                           @RequestParam String description,
+                           @RequestParam Integer numberOfPlayers,
+                           @RequestParam Integer playingTimeInMinutes,
+                           @RequestParam Integer ageRating,
+                           @RequestParam String releaseDate,
+                           @RequestParam List<Long> categoriesIds,
+                           @RequestParam Long publisherId) throws IOException {
+        if (photo == null || photo.isEmpty()) {
+            this.gameService.update(id, name, shortDescription, description, numberOfPlayers, playingTimeInMinutes, ageRating, LocalDate.parse(releaseDate), categoriesIds, publisherId);
+        } else {
+            this.gameService.update(id, photo, name, shortDescription, description, numberOfPlayers, playingTimeInMinutes, ageRating, LocalDate.parse(releaseDate), categoriesIds, publisherId);
+        }
         return "redirect:/games";
     }
 
