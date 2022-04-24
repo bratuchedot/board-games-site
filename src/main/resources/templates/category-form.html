@@ -60,10 +60,12 @@
                         </a>
                         <!-- Profile nav links -->
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item disabled" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="/profile">Profile</a></li>
                             <li><a class="dropdown-item" href="/favourites">Favourites</a></li>
                             <li><a class="dropdown-item disabled" href="#">My Games</a></li>
-                            <li><a class="dropdown-item disabled" href="#">Settings</a></li>
+                            <li><a class="dropdown-item"
+                                   th:href="@{'/profile/user/{id}/edit' (id=${#authentication.getPrincipal().getId()})}">Settings</a>
+                            </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

@@ -10,4 +10,8 @@ public interface UserService extends UserDetailsService {
 
     User register(String username, String password, String repeatPassword, String name, String surname, String email, String phone, String avatarUrl, Role role);
 
+    User findById(Long id);
+
+    User edit(Long id, String name, String surname, String email, String phone, String avatarUrl, Role role);
+
 }
